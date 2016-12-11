@@ -58,9 +58,9 @@ function receivedMessage (event) {
   var messageAttachments = message.attachments
 
   if (messageText) {
-    if (messageText.toUpperCase().indexOf('HOW TO USE') !== -1) {
-      sendTextMessage(senderID, "Tell me what city do you want.");
-    } else if (messageText !== '') {
+    if (messageText === 'พยากรณ์อากาศ') {
+      sendTextMessage(senderID, "พิมพ์ชื่อจังหวัด");
+    } else if (messageText ) {
       var location = event.message.text
       var weatherEndpoint = 'http://api.openweathermap.org/data/2.5/weather?q=' +location+ '&units=metric&appid=7bb0ec281912240aaa2b0a632fe3f779'
       request({
@@ -69,10 +69,10 @@ function receivedMessage (event) {
       }, function(error, response, body) {
         try {
           var condition = body.main;
-          sendTextMessage(senderID, "Now " + condition.temp + " degree Celsius in " + location + ".");
+          sendTextMessage(senderID, "" + condition.temp + " Celsius in " + location + ".");
         } catch(err) {
           console.error('error caught', err);
-          sendTextMessage(senderID, "Sorry plesae check your message.");
+          sendTextMessage(senderID, "พิมพ์ใหม่อีกครั้ง");
         }
       })
     }
@@ -88,7 +88,7 @@ function receivedMessage (event) {
     //     sendTextMessage(senderID, messageText)
     // }
   } else if (messageAttachments) {
-    sendTextMessage(senderID, 'Message with attachment received')
+    sendTextMessage(senderID, 'พิมพ์คำว่าพยากรณ์อากาศสิ')
   }
 }
 function sendGenericMessage(recipientId) {
