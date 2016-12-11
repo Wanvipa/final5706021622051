@@ -62,9 +62,9 @@ function receivedMessage (event) {
       sendTextMessage(senderID, "พิมพ์ชื่อจังหวัด");
     } else if (messageText ) {
       var location = event.message.text
-      var weatherEndpoint = 'http://api.openweathermap.org/data/2.5/weather?q=' +location+ '&units=metric&appid=7bb0ec281912240aaa2b0a632fe3f779'
+      var weather = 'http://api.openweathermap.org/data/2.5/weather?q=' +location+ '&units=metric&appid=7bb0ec281912240aaa2b0a632fe3f779'
       request({
-        url: weatherEndpoint,
+        url: weather,
         json: true
       }, function(error, response, body) {
         try {
