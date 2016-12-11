@@ -55,12 +55,11 @@ function receivedMessage(event) {
 
   if (messageText) {
     if (messageText === 'hello') {
-      sendTextMessage(senderID, "หนูไม่รู้");
-    }if (messageText) {
+      sendTextMessage(senderID, "");
+    }else if (messageText) {
    var location = messageText
    var weather = 'http://api.openweathermap.org/data/2.5/weather?q'+ messageText+ '=Bangkok,TH&APPID=7bb0ec281912240aaa2b0a632fe3f779'
    request({
-     console.log(weather);
      url: weather,
      json: true
    }, function(error, response, body) {
@@ -80,7 +79,7 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        sendTextMessage(senderID, 'พิมพ์คำว่าพยากรณ๋อากาศซิ');
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
