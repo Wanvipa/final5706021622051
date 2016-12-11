@@ -54,9 +54,7 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (messageText) {
-    if (messageText === 'hello') {
-      sendTextMessage(senderID, "");
-    }else if (messageText) {
+   if (messageText) {
       var location = event.message.text
           var weatherEndpoint = 'http://api.openweathermap.org/data/2.5/weather?q=' +location+ '&units=metric&appid=7bb0ec281912240aaa2b0a632fe3f779'
           request({
