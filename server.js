@@ -69,7 +69,7 @@ function receivedMessage (event) {
       }, function(error, response, body) {
         try {
           var condition = body.main;
-          sendTextMessage(senderID, "ตอนนี้" + condition.temp + " องศา " + location + "."+ condition.temp_min + " องศา "+condition.temp_max + " องศา ");
+          sendTextMessage(senderID, "ตอนนี้" + condition.temp + " องศา " + location + "."+"อุณหภูมิต่ำสุด"+ condition.temp_min + " องศา "+"อุณหภูมิสูงสุด"+condition.temp_max + " องศา ");
         } catch(err) {
           console.error('error caught', err);
           sendTextMessage(senderID, "พิมพ์ใหม่อีกครั้ง");
