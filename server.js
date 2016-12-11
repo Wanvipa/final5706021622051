@@ -57,20 +57,20 @@ function receivedMessage(event) {
     if (messageText === 'hello') {
       sendTextMessage(senderID, "");
     }else if (messageText) {
-   var location = messageText
-   var weather = 'http://api.openweathermap.org/data/2.5/weather?q'+ messageText+ '=Bangkok,TH&APPID=7bb0ec281912240aaa2b0a632fe3f779'
-   request({
-     url: weather,
-     json: true
-   }, function(error, response, body) {
-     try {
-       var condition = body.main;
-       sendTextMessage(sender, "Today is " + condition.temp + "Celsius in " + messageText);
-     } catch(err) {
-       console.error('error caught', err);
-       sendTextMessage(sender, "There was an error.");
-     }
-   })
+      var location = event.message.text
+          var weatherEndpoint = 'http://api.openweathermap.org/data/2.5/weather?q=' +location+ '&units=metric&appid=7bb0ec281912240aaa2b0a632fe3f779'
+          request({
+            url: weatherEndpoint,
+            json: true
+          }, function(error, response, body) {
+            try {
+              var condition = body.main;
+              sendTextMessage(sender, "วันนี้ อุณหภูมิ " + condition.temp + " °C  " + "ความชื้น " + condition.humidity + " % ที่" + location);
+            } catch(err) {
+              console.error('error caught', err);
+              sendTextMessage(sender, "โปรดใส่ชื่อเมืองให้ถูกต้อง(ยกตัวอย่างเช่น ฺBangkok )");
+            }
+          })
  }
 
     switch (messageText) {
@@ -79,7 +79,7 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, 'พิมพ์คำว่าพยากรณ๋อากาศซิ');
+        sendTextMessage(senderID, 'พิมพ์คำว่าพยากรณ์อากาศซิ');
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
