@@ -21,8 +21,6 @@ app.post('/webhook', function (req, res) {
 
   // Make sure this is a page subscription
   if (data.object === 'page') {
-
-    // Iterate over each entry - there may be multiple if batched
     data.entry.forEach(function(entry) {
       var pageID = entry.id;
       var timeOfEvent = entry.time;
@@ -36,12 +34,6 @@ app.post('/webhook', function (req, res) {
         }
       });
     });
-
-    // Assume all went well.
-    //
-    // You must send back a 200, within 20 seconds, to let us know
-    // you've successfully received the callback. Otherwise, the request
-    // will time out and we will keep trying to resend.
     res.sendStatus(200);
   }
 });
@@ -63,11 +55,25 @@ function receivedMessage(event) {
 
   if (messageText) {
     if (messageText === 'hello') {
-      sendTextMessage(senderID, "ควยเอ้ย ไม่รู้ request");
-    }
+      sendTextMessage(senderID, "หนูไม่รู้");
+    }if (messageText) {
+   var location = messageText
+   var weather = 'http://api.openweathermap.org/data/2.5/weather?q'+ messageText+ '=Bangkok,TH&APPID=7bb0ec281912240aaa2b0a632fe3f779'
+   request({
+     console.log(weather);
+     url: weather,
+     json: true
+   }, function(error, response, body) {
+     try {
+       var condition = body.main;
+       sendTextMessage(sender, "Today is " + condition.temp + "Celsius in " + messageText);
+     } catch(err) {
+       console.error('error caught', err);
+       sendTextMessage(sender, "There was an error.");
+     }
+   })
+ }
 
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
     switch (messageText) {
       case 'generic':
         sendGenericMessage(senderID);
